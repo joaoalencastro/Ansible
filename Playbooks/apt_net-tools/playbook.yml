@@ -1,0 +1,7 @@
+---
+- hosts: casa
+  tasks:
+    - name: Install net-tools if not installed.
+      apt: name=net-tools state=present
+    - name: Check if networking is started.
+      service: name=networking state=started enabled=yes

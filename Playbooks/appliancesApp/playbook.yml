@@ -1,0 +1,35 @@
+---
+- hosts: casa
+  #become: true
+
+  environment:
+    path: /usr/local/bin/virtualenv:{{ ansible_env.PATH }}
+
+  tasks:
+
+    - name: Instalar o Python3.
+      apt: name=python3.7 state=present
+
+    - name: Instalar o pip3.
+      apt: name=python3-pip state=present
+
+    - name: Instalar setuptools e virtualenv.
+      command: pip3 install setuptools virtualenv
+
+    - name: Criar um Ambiente Virtual.
+      command: virtualenv /opt/appliancesAppVenv
+
+    - name: Adicionar Variáveis de Ambiente ao activate.
+      lineinfile:
+        path: /opt/appliancesAppVenv/bin/activate
+        insertafter: EOF
+        line: "{{ env }}"     # Variável armazenada em /etc/ansible/hosts
+      
+    - name: Ativar o ambiente virtual.
+      shell: . /opt/appliancesAppVenv/bin/activate
+
+    - name: Clonar o repositório do trabalho.
+      git:
+        repo: "https://github.com/joaoalencastro/appliancesApp"
+        dest: /opt/appliancesAppVenv/
+        accept_hostkey: yes

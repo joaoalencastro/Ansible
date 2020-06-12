@@ -1,0 +1,7 @@
+---
+- hosts: casa 
+  become: yes
+  tasks:
+  - name: Verify if NTP is present.
+    apt: name=ntp state=present
+  - service: name=ntp state=started enabled=yes

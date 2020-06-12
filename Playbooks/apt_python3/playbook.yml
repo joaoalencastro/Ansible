@@ -1,0 +1,7 @@
+---
+- hosts: casa
+  tasks:
+    - name: Instalar o Python 3.7
+      apt: name=python3.7 state=present
+    - name: Instalar o Pip 3
+      apt: name=python3-pip state=present
