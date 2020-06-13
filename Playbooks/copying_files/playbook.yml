@@ -1,0 +1,28 @@
+---
+- hosts: casa
+
+  tasks:
+    - name: Criar dois diretórios na home de João.
+      file:
+        path: "/home/joao/{{ item.name }}"
+        owner: joao
+        group: joao
+        state: directory
+        mode: '0755'
+      with_items:
+        - name: pasta1
+        - name: pasta2
+
+
+    - name: Copiar arquivos da estação para o servidor.
+      copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: joao
+        group: joao
+        mode: 0644
+      with_items:
+        - src: teste1.txt
+          dest: /home/joao/pasta1
+        - src: teste2.txt
+          dest: /home/joao/pasta2
