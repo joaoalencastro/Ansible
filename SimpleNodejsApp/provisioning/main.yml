@@ -10,8 +10,13 @@
       yum: name=epel-release state=present
 
     - name: Import Remi GPG key.
-      rpm-key:
-        key: "https://rpmps.remirepo.net/RPM-GPG-KEY-remi"
+      rpm_key:
+        key: "https://rpms.remirepo.net/RPM-GPG-KEY-remi"
+        state: present
+
+    - name: Install Remi repo.
+      yum:
+        name: "https://rpms.remirepo.net/enterprise/remi-release-7.rpm"
         state: present
 
     - name: Ensure firewalld is stopped (since this is for testing).
